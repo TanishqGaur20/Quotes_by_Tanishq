@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Poppins:ital,wght@0,600;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+</head>
+
+<body>
+    <!-- <div id="quotes"></div>
+    <div id="author"></div>
+    <button id="newquotes">New Quotes</button> -->
+
+    <div class="container">
+        <h1 id="kk"> Quotes</h1>
+        <div class="inner">
+            <div class="coma">
+                <i id="Coma" class="fas fa-quote-left"></i>
+            </div>
+            <div id="quotes" data-aos="zoom-in">
+
+            </div>
+            <div id="author">
+
+            </div>
+            <label id="newquotes">New Quotes</label>
+        </div>
+    </div>
+
+    <script>
+        const quotes = document.getElementById("quotes");
+
+        const author = document.getElementById("author");
+
+        const newquotes = document.getElementById('newquotes');
+
+        let realdata = "";
+        let quotesdata = "";
+
+        const getNewQuotes = () => {
+            let randomno = Math.floor(Math.random() * 10);
+            quotesdata = realdata[randomno];
+            quotes.innerHTML = quotesdata.text;
+            quotesdata.author == null
+                ? (author.innerText = "unknown")
+                : (author.innerText = quotesdata.author);
+        };
+
+
+        const getQuotes = async () => {
+            const api = "https://type.fit/api/quotes";
+            try {
+                const data = await fetch(api);//await is using for wait because async function doesnt wait and fetch (api) is for fetching data from api and storing in data variable
+                realdata = await data.json();//here, the data of api is converting in json format or string format so the data become readable
+                //now the data of api is in array format and u can access it as an array elements like:- realdata[0];
+                getNewQuotes();
+
+            } catch (error) { }
+        };
+
+        newquotes.addEventListener('click', getNewQuotes);
+        getQuotes();
+    </script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+</body>
+
+</html>
